@@ -25,7 +25,11 @@ public class UpdateServiceInstanceRequest {
 	@JsonSerialize
 	@JsonProperty("parameters")
 	private Map<String, Object> parameters;
-	
+
+	@JsonSerialize
+	@JsonProperty("service_id")
+	private String serviceId;
+
 	@JsonIgnore
 	private String serviceInstanceId;
 
@@ -41,6 +45,11 @@ public class UpdateServiceInstanceRequest {
 		this.parameters = parameters;
 	}
 
+	public UpdateServiceInstanceRequest(String planId, String serviceId, Map<String, Object> parameters) {
+		this(planId, parameters);
+		this.serviceId = serviceId;
+	}
+
 	public String getPlanId() {
 		return planId;
 	}
@@ -51,6 +60,10 @@ public class UpdateServiceInstanceRequest {
 
 	public Map<String, Object> getParameters() {
 		return parameters;
+	}
+
+	public String getServiceId() {
+		return serviceId;
 	}
 
 	public <T> T getParameters(Class<T> cls) throws IllegalArgumentException {
@@ -78,11 +91,13 @@ public class UpdateServiceInstanceRequest {
 		if (o == null || getClass() != o.getClass()) return false;
 		UpdateServiceInstanceRequest that = (UpdateServiceInstanceRequest) o;
 		return Objects.equals(planId, that.planId) &&
-				Objects.equals(parameters, that.parameters);
+				Objects.equals(parameters, that.parameters) &&
+				Objects.equals(serviceId, that.serviceId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(planId, parameters);
+		return Objects.hash(planId, parameters, serviceId);
 	}
+
 }
